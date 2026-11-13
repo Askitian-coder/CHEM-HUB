@@ -1,21 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="240" height="200" viewBox="0 0 240 200" fill="none">
-  <g stroke="#6366f1" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" opacity=".12">
-    <path d="M34 38 58 24l24 14v28L58 80 34 66zM82 52h31m-55 28v30m48-58 19-17m-73 59-25 15m72-39 24 14 24-14 24 14v28l-24 14-24-14v-28m48 28h27m-75 14v28m-24-42-25 14m73 0 20 12m-48-40 20-12"/>
-    <path d="m171 138 23-14 23 14v26l-23 13-23-13zM10 151h25m91-108 18-11m30 94v-23"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="300" viewBox="0 0 360 300" fill="none">
+  <g stroke="#4f46e5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" opacity=".28">
+    <path d="m49 56 31-18 31 18v36l-31 18-31-18z"/>
+    <path d="m57 61 23-13m23 17v25m-46 6 22 13"/>
+    <path d="m111 74 31-18 31 18v36l-31 18-31-18"/>
+    <path d="m142 56 18-26m13 44 31-18m-62 72v32m-31-18-28 16"/>
+    <path d="m215 62 25-15 25 15m-25-15v-25m25 40 25 15-7 29-29 9-21-19"/>
+    <path d="m240 47 25 15m-50 0-25 15"/>
+    <path d="m38 191 20 24h47l20-24m-76 0 7 54h62l7-54m-64 39h58"/>
+    <path d="m206 196 31-18 31 18v36l-31 18-31-18z"/>
+    <path d="m268 214 27-16m-58 52v26m-31-44-25 14m87-19 25 17"/>
+    <ellipse cx="311" cy="142" rx="31" ry="12" transform="rotate(-32 311 142)"/>
+    <ellipse cx="311" cy="142" rx="31" ry="12" transform="rotate(32 311 142)"/>
+    <ellipse cx="311" cy="142" rx="31" ry="12" transform="rotate(90 311 142)"/>
   </g>
-  <g fill="#4f46e5" opacity=".14">
-    <circle cx="34" cy="38" r="3"/><circle cx="58" cy="24" r="3"/><circle cx="82" cy="38" r="3"/>
-    <circle cx="82" cy="66" r="3"/><circle cx="58" cy="80" r="3"/><circle cx="34" cy="66" r="3"/>
-    <circle cx="113" cy="52" r="3"/><circle cx="123" cy="21" r="3"/><circle cx="34" cy="110" r="3"/>
-    <circle cx="58" cy="124" r="3"/><circle cx="131" cy="66" r="3"/><circle cx="155" cy="52" r="3"/>
-    <circle cx="179" cy="66" r="3"/><circle cx="179" cy="94" r="3"/><circle cx="155" cy="108" r="3"/>
-    <circle cx="131" cy="94" r="3"/><circle cx="206" cy="94" r="3"/><circle cx="131" cy="122" r="3"/>
-    <circle cx="151" cy="134" r="3"/><circle cx="171" cy="138" r="3"/><circle cx="194" cy="124" r="3"/>
-    <circle cx="217" cy="138" r="3"/><circle cx="217" cy="164" r="3"/><circle cx="194" cy="177" r="3"/>
-    <circle cx="171" cy="164" r="3"/><circle cx="151" cy="176" r="3"/><circle cx="151" cy="148" r="3"/>
-    <circle cx="10" cy="151" r="3"/><circle cx="35" cy="151" r="3"/>
+  <g fill="#4f46e5" opacity=".5">
+    <circle cx="49" cy="56" r="4"/><circle cx="80" cy="38" r="4"/><circle cx="111" cy="56" r="4"/>
+    <circle cx="111" cy="92" r="4"/><circle cx="80" cy="110" r="4"/><circle cx="49" cy="92" r="4"/>
+    <circle cx="142" cy="56" r="4"/><circle cx="173" cy="74" r="4"/><circle cx="173" cy="110" r="4"/>
+    <circle cx="142" cy="128" r="4"/><circle cx="204" cy="80" r="4"/><circle cx="215" cy="62" r="4"/>
+    <circle cx="240" cy="47" r="4"/><circle cx="265" cy="62" r="4"/><circle cx="290" cy="77" r="4"/>
+    <circle cx="283" cy="106" r="4"/><circle cx="254" cy="115" r="4"/><circle cx="233" cy="96" r="4"/>
+    <circle cx="38" cy="191" r="4"/><circle cx="58" cy="215" r="4"/><circle cx="105" cy="215" r="4"/>
+    <circle cx="125" cy="191" r="4"/><circle cx="44" cy="245" r="4"/><circle cx="106" cy="245" r="4"/>
+    <circle cx="206" cy="196" r="4"/><circle cx="237" cy="178" r="4"/><circle cx="268" cy="196" r="4"/>
+    <circle cx="268" cy="232" r="4"/><circle cx="237" cy="250" r="4"/><circle cx="206" cy="232" r="4"/>
+    <circle cx="295" cy="198" r="4"/><circle cx="237" cy="276" r="4"/><circle cx="180" cy="146" r="4"/>
+    <circle cx="311" cy="142" r="5"/>
   </g>
-  <g fill="#4f46e5" font-family="Arial, sans-serif" font-size="8" font-weight="700" opacity=".14">
-    <text x="54" y="56">C</text><text x="150" y="83">N</text><text x="188" y="153">O</text>
+  <g fill="#0f766e" opacity=".58">
+    <circle cx="217" cy="62" r="4"/><circle cx="265" cy="62" r="4"/><circle cx="240" cy="37" r="4"/>
+  </g>
+  <g fill="#e11d48" opacity=".62">
+    <circle cx="240" cy="76" r="5"/><circle cx="255" cy="205" r="4"/>
+  </g>
+  <g fill="#b45309" opacity=".62">
+    <circle cx="80" cy="74" r="4"/><circle cx="80" cy="231" r="4"/>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="12" font-weight="700">
+    <text x="74" y="79" fill="#4338ca" opacity=".62">C</text>
+    <text x="235" y="81" fill="#be123c" opacity=".72">O</text>
+    <text x="207" y="66" fill="#0f766e" opacity=".72">H</text>
+    <text x="265" y="67" fill="#0f766e" opacity=".72">H</text>
+    <text x="307" y="146" fill="#4338ca" opacity=".7">e⁻</text>
+    <text x="75" y="234" fill="#92400e" opacity=".74">Na</text>
+    <text x="249" y="220" fill="#be123c" opacity=".72">O</text>
   </g>
 </svg>
