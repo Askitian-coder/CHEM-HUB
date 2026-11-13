@@ -39,8 +39,8 @@ jobs:
         run: npm run build
         env:
           VITE_BASE_PATH: ${{ steps.pages.outputs.base_path }}
-          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL || 'https://umcqantehnorhuqzgotw.supabase.co' }}
+          VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY || 'sb_publishable_1U6IHgUC6qjvRDqWOXQPBg_pWoXCYK0' }}
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
