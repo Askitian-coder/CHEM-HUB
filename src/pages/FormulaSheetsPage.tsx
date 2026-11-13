@@ -11,7 +11,7 @@ export default function FormulaSheetsPage() {
     const query = search.trim().toLowerCase();
     return FORMULA_SHEETS.filter((sheet) => {
       const matchesTopic = topic === "All topics" || sheet.topic === topic;
-      const searchable = `${sheet.title} ${sheet.topic} ${sheet.equation} ${sheet.variables} ${sheet.use}`.toLowerCase();
+      const searchable = `${sheet.title} ${sheet.topic} ${sheet.equation} ${sheet.variables} ${sheet.use} ${sheet.example}`.toLowerCase();
       return matchesTopic && (!query || searchable.includes(query));
     });
   }, [search, topic]);
