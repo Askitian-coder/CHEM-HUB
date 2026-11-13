@@ -4,6 +4,7 @@ const tools = [
   { title: "Periodic Table", description: "Explore all 118 elements and their properties.", path: "/periodic-table", icon: "⚛️", color: "bg-sky-50 text-sky-700 ring-sky-100", iconColor: "bg-sky-100" },
   { title: "Unit Converter", description: "Switch between the units used in chemistry.", path: "/converter", icon: "⇄", color: "bg-violet-50 text-violet-700 ring-violet-100", iconColor: "bg-violet-100" },
   { title: "Formula Sheets", description: "Find the equations you need for each topic.", path: "/formulas", icon: "∑", color: "bg-emerald-50 text-emerald-700 ring-emerald-100", iconColor: "bg-emerald-100" },
+  { title: "Concept Maps", description: "Review visual guides to electrochemistry, acids, bases, and salts.", path: "/concept-maps", icon: "⌘", color: "bg-blue-50 text-blue-700 ring-blue-100", iconColor: "bg-blue-100" },
   { title: "Molar Mass", description: "Calculate formula mass with clear working.", path: "/calculators/molar-mass", icon: "⚖️", color: "bg-amber-50 text-amber-800 ring-amber-100", iconColor: "bg-amber-100" },
   { title: "Stoichiometry", description: "Work through mole ratios and reaction yields.", path: "/calculators/stoichiometry", icon: "🧪", color: "bg-rose-50 text-rose-700 ring-rose-100", iconColor: "bg-rose-100" },
   { title: "Concentration", description: "Solve molarity, mass concentration, and dilution.", path: "/calculators/concentration", icon: "◉", color: "bg-indigo-50 text-indigo-700 ring-indigo-100", iconColor: "bg-indigo-100" },

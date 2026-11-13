@@ -11,6 +11,7 @@ import UnitConverterPage from "./pages/UnitConverterPage";
 import FormulaSheetsPage from "./pages/FormulaSheetsPage";
 import StoichiometryPage from "./pages/StoichiometryPage";
 import ConcentrationPage from "./pages/ConcentrationPage";
+import ConceptMapsPage from "./pages/ConceptMapsPage";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/periodic-table" element={<PeriodicTablePage />} />
         <Route path="/converter" element={<UnitConverterPage />} />
         <Route path="/formulas" element={<FormulaSheetsPage />} />
+        <Route path="/concept-maps" element={<ConceptMapsPage />} />
         <Route path="/calculators/molar-mass" element={<MolarMassPage />} />
         <Route path="/redox" element={<RedoxPage />} />
         <Route path="/acid-base-salts" element={<AcidBaseSaltPage />} />

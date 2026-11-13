@@ -6,6 +6,7 @@ const routes = [
   "/periodic-table",
   "/converter",
   "/formulas",
+  "/concept-maps",
   "/calculators/molar-mass",
   "/calculators/stoichiometry",
   "/calculators/concentration",
