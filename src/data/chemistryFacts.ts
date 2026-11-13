@@ -8,6 +8,14 @@ export interface ChemistryFact {
     claim: string;
     correction: string;
   };
+  scientist?: {
+    names: string;
+    dates: string;
+    field: string;
+    contribution: string;
+    historicalContext: string;
+    recognition?: string;
+  };
   relatedTool?: {
     label: string;
     path: string;
