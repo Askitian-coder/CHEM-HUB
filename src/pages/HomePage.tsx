@@ -23,7 +23,7 @@ export default function HomePage() {
     <div className="py-4 sm:py-8">
       <section className="mb-10 rounded-3xl bg-gradient-to-br from-indigo-700 to-indigo-500 px-6 py-10 text-white shadow-lg sm:px-10 sm:py-14">
         <p className="text-sm font-semibold uppercase tracking-widest text-indigo-100">Learn it. Calculate it. Understand it.</p>
-        <h1 className="mt-3 text-4xl font-extrabold tracking-tight sm:text-5xl">Welcome to ChemHub</h1>
+        <h1 className="mt-3 text-4xl font-extrabold tracking-tight sm:text-5xl">ChemHub by Askitian</h1>
         <p className="mt-4 max-w-2xl text-lg text-indigo-100">Welcome to ChemHub — your chemistry study companion.</p>
       </section>
       <section className="mb-10 grid gap-4 rounded-2xl border border-indigo-100 bg-white p-5 shadow-sm sm:grid-cols-[auto_1fr_auto] sm:items-center sm:p-6" aria-labelledby="daily-chemistry-fact">
