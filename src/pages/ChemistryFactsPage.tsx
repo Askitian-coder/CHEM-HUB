@@ -23,6 +23,12 @@ export default function ChemistryFactsPage() {
         item.topic,
         item.fact,
         item.whyItMatters,
+        item.scientist?.names ?? "",
+        item.scientist?.dates ?? "",
+        item.scientist?.field ?? "",
+        item.scientist?.contribution ?? "",
+        item.scientist?.historicalContext ?? "",
+        item.scientist?.recognition ?? "",
         item.misconception?.claim ?? "",
         item.misconception?.correction ?? "",
       ].join(" ").toLowerCase();
@@ -34,24 +40,24 @@ export default function ChemistryFactsPage() {
     <ToolPage
       eyebrow="Chemistry field notes"
       title="Chemistry Facts & Insights"
-      description="Memorable chemistry facts, the science behind them, and quick myth-busters to help ideas stick."
+      description="Explore memorable science, the people and collaborations behind discoveries, and the ideas that shape chemistry."
     >
       <div className="rounded-xl border border-indigo-100 bg-indigo-50 p-4 sm:p-5">
-        <p className="text-sm font-bold text-indigo-800">How to use this guide</p>
+        <p className="text-sm font-bold text-indigo-800">Science is a shared story</p>
         <p className="mt-1 text-sm leading-6 text-slate-700">
-          Start with a surprising fact, then connect it to the chemistry rule. Open a common mix-up to test whether you can explain the idea in your own words.
+          Discoveries build on earlier work, teamwork, and ideas crossing cultures. Some contributions were overlooked or credited unevenly, so these stories include context rather than reducing science to a single name.
         </p>
       </div>
 
       <label htmlFor="fact-search" className="mb-2 mt-5 block text-sm font-semibold text-slate-700">
-        Search facts
+        Search facts, people, or discoveries
       </label>
       <input
         id="fact-search"
         type="search"
         value={search}
         onChange={(event) => setSearch(event.target.value)}
-        placeholder="Try “water”, “catalyst”, “pH”, or “electrons”"
+        placeholder="Try “water”, “Alice Ball”, “ozone”, or “electrons”"
         className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
       />
 
@@ -74,7 +80,7 @@ export default function ChemistryFactsPage() {
       </div>
 
       <p className="mt-5 text-sm text-slate-500" aria-live="polite">
-        {facts.length} {facts.length === 1 ? "fact" : "facts"}
+        {facts.length} {facts.length === 1 ? "entry" : "entries"}
       </p>
 
       <div className="mt-3 grid gap-4 md:grid-cols-2">
@@ -85,6 +91,24 @@ export default function ChemistryFactsPage() {
             <p className="mt-3 rounded-lg bg-indigo-50 px-3 py-3 text-sm font-medium leading-6 text-indigo-900">
               {item.fact}
             </p>
+            {item.scientist && (
+              <section className="mt-3 rounded-lg border border-amber-200 bg-amber-50 p-3" aria-label="Scientist and discovery context">
+                <p className="text-xs font-bold uppercase tracking-wide text-amber-800">People behind the chemistry</p>
+                <h3 className="mt-1 font-bold text-slate-900">{item.scientist.names}</h3>
+                <p className="mt-0.5 text-xs font-medium text-amber-900">
+                  {item.scientist.dates} · {item.scientist.field}
+                </p>
+                <p className="mt-2 text-sm leading-6 text-slate-700">{item.scientist.contribution}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-600">
+                  <strong>Historical context:</strong> {item.scientist.historicalContext}
+                </p>
+                {item.scientist.recognition && (
+                  <p className="mt-2 text-xs font-semibold text-amber-900">
+                    Recognition: {item.scientist.recognition}
+                  </p>
+                )}
+              </section>
+            )}
             <div className="mt-3 flex-1">
               <p className="text-sm font-semibold text-slate-800">Why it matters</p>
               <p className="mt-1 text-sm leading-6 text-slate-600">{item.whyItMatters}</p>

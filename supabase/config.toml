@@ -1,0 +1,4 @@
+project_id = "chemhub"
+
+[functions.daily-auth-summary]
+verify_jwt = false

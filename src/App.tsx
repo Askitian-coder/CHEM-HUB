@@ -13,33 +13,41 @@ import StoichiometryPage from "./pages/StoichiometryPage";
 import ConcentrationPage from "./pages/ConcentrationPage";
 import ConceptMapsPage from "./pages/ConceptMapsPage";
 import ChemistryFactsPage from "./pages/ChemistryFactsPage";
+import AuthPage from "./pages/AuthPage";
+import { AuthProvider } from "./auth/AuthProvider";
+import StudyProgressPage from "./pages/StudyProgressPage";
 
 export default function App() {
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/periodic-table" element={<PeriodicTablePage />} />
-        <Route path="/converter" element={<UnitConverterPage />} />
-        <Route path="/formulas" element={<FormulaSheetsPage />} />
-        <Route path="/concept-maps" element={<ConceptMapsPage />} />
-        <Route path="/chemistry-facts" element={<ChemistryFactsPage />} />
-        <Route path="/calculators/molar-mass" element={<MolarMassPage />} />
-        <Route path="/redox" element={<RedoxPage />} />
-        <Route path="/acid-base-salts" element={<AcidBaseSaltPage />} />
-        <Route path="/oxidation-numbers" element={<OxidationNumbersPage />} />
-        <Route path="/calculators/stoichiometry" element={<StoichiometryPage />} />
-        <Route path="/calculators/concentration" element={<ConcentrationPage />} />
-        <Route
-          path="*"
-          element={
-            <PlaceholderPage
-              title="Page not found"
-              description="That page isn't here, but your next chemistry discovery is."
-            />
-          }
-        />
-      </Routes>
-    </Layout>
+    <AuthProvider>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/periodic-table" element={<PeriodicTablePage />} />
+          <Route path="/converter" element={<UnitConverterPage />} />
+          <Route path="/formulas" element={<FormulaSheetsPage />} />
+          <Route path="/concept-maps" element={<ConceptMapsPage />} />
+          <Route path="/chemistry-facts" element={<ChemistryFactsPage />} />
+          <Route path="/study-progress" element={<StudyProgressPage />} />
+          <Route path="/login" element={<AuthPage mode="login" />} />
+          <Route path="/signup" element={<AuthPage mode="signup" />} />
+          <Route path="/calculators/molar-mass" element={<MolarMassPage />} />
+          <Route path="/redox" element={<RedoxPage />} />
+          <Route path="/acid-base-salts" element={<AcidBaseSaltPage />} />
+          <Route path="/oxidation-numbers" element={<OxidationNumbersPage />} />
+          <Route path="/calculators/stoichiometry" element={<StoichiometryPage />} />
+          <Route path="/calculators/concentration" element={<ConcentrationPage />} />
+          <Route
+            path="*"
+            element={
+              <PlaceholderPage
+                title="Page not found"
+                description="That page isn't here, but your next chemistry discovery is."
+              />
+            }
+          />
+        </Routes>
+      </Layout>
+    </AuthProvider>
   );
 }

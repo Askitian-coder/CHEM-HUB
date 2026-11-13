@@ -7,6 +7,7 @@ const tools = [
   { title: "Formula Sheets", description: "Find the equations you need for each topic.", path: "/formulas", icon: "∑", color: "bg-emerald-50 text-emerald-700 ring-emerald-100", iconColor: "bg-emerald-100" },
   { title: "Concept Maps", description: "Review visual guides to electrochemistry, acids, bases, and salts.", path: "/concept-maps", icon: "⌘", color: "bg-blue-50 text-blue-700 ring-blue-100", iconColor: "bg-blue-100" },
   { title: "Chemistry Facts", description: "Discover surprising facts and clear up common chemistry myths.", path: "/chemistry-facts", icon: "✦", color: "bg-lime-50 text-lime-800 ring-lime-100", iconColor: "bg-lime-100" },
+  { title: "Study Progress", description: "Track chemistry topics, study days, and your learning streak.", path: "/study-progress", icon: "✓", color: "bg-indigo-50 text-indigo-700 ring-indigo-100", iconColor: "bg-indigo-100" },
   { title: "Molar Mass", description: "Calculate formula mass with clear working.", path: "/calculators/molar-mass", icon: "⚖️", color: "bg-amber-50 text-amber-800 ring-amber-100", iconColor: "bg-amber-100" },
   { title: "Stoichiometry", description: "Work through mole ratios and reaction yields.", path: "/calculators/stoichiometry", icon: "🧪", color: "bg-rose-50 text-rose-700 ring-rose-100", iconColor: "bg-rose-100" },
   { title: "Concentration", description: "Solve molarity, mass concentration, and dilution.", path: "/calculators/concentration", icon: "◉", color: "bg-indigo-50 text-indigo-700 ring-indigo-100", iconColor: "bg-indigo-100" },
@@ -32,6 +33,11 @@ export default function HomePage() {
             Today's chemistry spark · {dailyFact.topic}
           </p>
           <h2 id="daily-chemistry-fact" className="mt-1 text-xl font-bold text-slate-900">{dailyFact.title}</h2>
+          {dailyFact.scientist && (
+            <p className="mt-1 text-sm font-semibold text-amber-800">
+              People in this story: {dailyFact.scientist.names}
+            </p>
+          )}
           <p className="mt-2 text-sm leading-6 text-slate-700">{dailyFact.fact}</p>
           <p className="mt-1 text-sm leading-6 text-slate-500">{dailyFact.whyItMatters}</p>
         </div>
@@ -39,7 +45,7 @@ export default function HomePage() {
           to="/chemistry-facts"
           className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-50 px-4 py-3 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-100 sm:whitespace-nowrap"
         >
-          Explore all facts <span aria-hidden="true">→</span>
+          Explore facts & discoveries <span aria-hidden="true">→</span>
         </Link>
       </section>
       <div className="mb-5">

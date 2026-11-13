@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../auth/AuthProvider";
 
 export type ThemeMode = "light" | "dark";
 
@@ -10,6 +11,7 @@ interface NavBarProps {
 
 const links = [
   { to: "/", label: "Home" },
+  { to: "/study-progress", label: "Study Progress" },
   { to: "/periodic-table", label: "Periodic Table" },
   { to: "/converter", label: "Unit Converter" },
   { to: "/formulas", label: "Formula Sheets" },
@@ -32,6 +34,18 @@ const linkStyle = ({ isActive }: { isActive: boolean }) =>
 
 export default function NavBar({ theme, onToggleTheme }: NavBarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [signOutError, setSignOutError] = useState("");
+  const { user, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    setSignOutError("");
+    try {
+      await signOut();
+      setMenuOpen(false);
+    } catch (error) {
+      setSignOutError(error instanceof Error ? error.message : "Unable to sign out.");
+    }
+  };
 
   return (
     <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur">
@@ -52,6 +66,19 @@ export default function NavBar({ theme, onToggleTheme }: NavBarProps) {
           ))}
         </div>
         <div className="flex items-center gap-1">
+          {user ? (
+            <button
+              type="button"
+              onClick={handleSignOut}
+              className="rounded-lg px-3 py-2 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-50"
+            >
+              Sign out
+            </button>
+          ) : (
+            <NavLink to="/login" className={linkStyle}>
+              Sign in
+            </NavLink>
+          )}
           <button
             type="button"
             className="inline-flex h-10 items-center justify-center gap-2 rounded-lg px-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 sm:px-3"
@@ -86,8 +113,27 @@ export default function NavBar({ theme, onToggleTheme }: NavBarProps) {
                 {link.label}
               </NavLink>
             ))}
+            {user ? (
+              <button
+                type="button"
+                onClick={handleSignOut}
+                className="rounded-lg px-3 py-2 text-left text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-indigo-700"
+              >
+                Sign out
+              </button>
+            ) : (
+              <>
+                <NavLink to="/login" className={linkStyle} onClick={() => setMenuOpen(false)}>Sign in</NavLink>
+                <NavLink to="/signup" className={linkStyle} onClick={() => setMenuOpen(false)}>Create account</NavLink>
+              </>
+            )}
           </div>
         </div>
+      )}
+      {signOutError && (
+        <p role="alert" className="mx-auto max-w-6xl px-4 pb-2 text-right text-sm text-rose-700">
+          {signOutError}
+        </p>
       )}
     </header>
   );
