@@ -196,11 +196,17 @@ export function determineOxidationNumbers(formula: string): OxidationNumber[] {
 
   if (symbols.length === 1) {
     const symbol = symbols[0];
+    const value = charge / (counts.get(symbol) ?? 1);
+    const isWholeNumber = Math.abs(value - Math.round(value)) < 1e-8;
     return [{
       symbol,
       name: getElementBySymbol(symbol)?.name ?? symbol,
-      value: 0,
-      note: "An element in its uncombined form has oxidation number 0.",
+      value: isWholeNumber ? Math.round(value) : null,
+      note: charge === 0
+        ? "An element in its uncombined form has oxidation number 0."
+        : isWholeNumber
+          ? "For a monatomic ion, the oxidation number equals the ion's charge."
+          : "The charge is not evenly distributed across these atoms.",
     }];
   }
 

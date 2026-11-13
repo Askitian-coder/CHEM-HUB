@@ -7,6 +7,10 @@ import MolarMassPage from "./pages/MolarMassPage";
 import RedoxPage from "./pages/RedoxPage";
 import AcidBaseSaltPage from "./pages/AcidBaseSaltPage";
 import OxidationNumbersPage from "./pages/OxidationNumbersPage";
+import UnitConverterPage from "./pages/UnitConverterPage";
+import FormulaSheetsPage from "./pages/FormulaSheetsPage";
+import StoichiometryPage from "./pages/StoichiometryPage";
+import ConcentrationPage from "./pages/ConcentrationPage";
 
 export default function App() {
   return (
@@ -14,46 +18,14 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/periodic-table" element={<PeriodicTablePage />} />
-        <Route
-          path="/converter"
-          element={
-            <PlaceholderPage
-              title="Unit Converter"
-              description="Convert between moles, grams, temperature, pressure, volume, mass, and energy."
-            />
-          }
-        />
-        <Route
-          path="/formulas"
-          element={
-            <PlaceholderPage
-              title="Formula Sheets"
-              description="Searchable formula sheets for every chemistry topic."
-            />
-          }
-        />
+        <Route path="/converter" element={<UnitConverterPage />} />
+        <Route path="/formulas" element={<FormulaSheetsPage />} />
         <Route path="/calculators/molar-mass" element={<MolarMassPage />} />
         <Route path="/redox" element={<RedoxPage />} />
         <Route path="/acid-base-salts" element={<AcidBaseSaltPage />} />
         <Route path="/oxidation-numbers" element={<OxidationNumbersPage />} />
-        <Route
-          path="/calculators/stoichiometry"
-          element={
-            <PlaceholderPage
-              title="Stoichiometry Solver"
-              description="Solve stoichiometry problems step by step — mole ratios, limiting reagents, yields."
-            />
-          }
-        />
-        <Route
-          path="/calculators/concentration"
-          element={
-            <PlaceholderPage
-              title="Concentration Calculator"
-              description="Molarity, mass concentration, and dilution calculator."
-            />
-          }
-        />
+        <Route path="/calculators/stoichiometry" element={<StoichiometryPage />} />
+        <Route path="/calculators/concentration" element={<ConcentrationPage />} />
         <Route
           path="*"
           element={

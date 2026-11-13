@@ -29,7 +29,11 @@ export default function OxidationNumbersPage() {
         <input
           id="oxidation-formula"
           value={formula}
-          onChange={(event) => setFormula(event.target.value)}
+          onChange={(event) => {
+            setFormula(event.target.value);
+            setResults(null);
+            setError("");
+          }}
           onKeyDown={(event) => {
             if (event.key === "Enter") calculate();
           }}

@@ -35,7 +35,11 @@ export default function AcidBaseSaltPage() {
         <input
           id="compound-formula"
           value={formula}
-          onChange={(event) => setFormula(event.target.value)}
+          onChange={(event) => {
+            setFormula(event.target.value);
+            setResult(null);
+            setError("");
+          }}
           onKeyDown={(event) => {
             if (event.key === "Enter") determine();
           }}

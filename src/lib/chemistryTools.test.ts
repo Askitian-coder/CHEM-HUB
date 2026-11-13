@@ -53,6 +53,18 @@ describe("oxidation number calculator", () => {
     ]);
   });
 
+  it("uses the charge as the oxidation number of a monatomic ion", () => {
+    expect(determineOxidationNumbers("Fe^3+")).toMatchObject([
+      { symbol: "Fe", value: 3 },
+    ]);
+    expect(determineOxidationNumbers("Cl^-")).toMatchObject([
+      { symbol: "Cl", value: -1 },
+    ]);
+    expect(determineOxidationNumbers("O2")).toMatchObject([
+      { symbol: "O", value: 0 },
+    ]);
+  });
+
   it("marks formulas where common rules do not determine every value", () => {
     expect(determineOxidationNumbers("Fe3O4")).toMatchObject([
       { symbol: "Fe", value: null },

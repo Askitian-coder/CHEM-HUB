@@ -29,7 +29,11 @@ export default function RedoxPage() {
       <textarea
         id="redox-equation"
         value={equation}
-        onChange={(event) => setEquation(event.target.value)}
+        onChange={(event) => {
+          setEquation(event.target.value);
+          setResult(null);
+          setError("");
+        }}
         rows={3}
         placeholder="Fe^2+ + MnO4^- + H+ -> Fe^3+ + Mn^2+ + H2O"
         className="w-full resize-y rounded-xl border border-slate-300 px-4 py-3 font-mono text-sm outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
