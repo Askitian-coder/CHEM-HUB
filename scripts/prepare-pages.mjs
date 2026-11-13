@@ -7,6 +7,7 @@ const routes = [
   "/converter",
   "/formulas",
   "/concept-maps",
+  "/chemistry-facts",
   "/calculators/molar-mass",
   "/calculators/stoichiometry",
   "/calculators/concentration",

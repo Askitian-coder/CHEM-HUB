@@ -79,7 +79,8 @@ html.dark .bg-amber-50,
 html.dark .bg-rose-50,
 html.dark .bg-cyan-50,
 html.dark .bg-fuchsia-50,
-html.dark .bg-teal-50 {
+html.dark .bg-teal-50,
+html.dark .bg-lime-50 {
   @apply bg-slate-800;
 }
 
@@ -92,7 +93,8 @@ html.dark .bg-amber-100,
 html.dark .bg-rose-100,
 html.dark .bg-cyan-100,
 html.dark .bg-fuchsia-100,
-html.dark .bg-teal-100 {
+html.dark .bg-teal-100,
+html.dark .bg-lime-100 {
   @apply bg-slate-700;
 }
 
@@ -112,6 +114,7 @@ html.dark .text-amber-800,
 html.dark .text-cyan-800,
 html.dark .text-fuchsia-800,
 html.dark .text-teal-800,
+html.dark .text-lime-800,
 html.dark .text-indigo-800 {
   @apply text-slate-200;
 }

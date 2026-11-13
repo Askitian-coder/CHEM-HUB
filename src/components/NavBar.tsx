@@ -14,6 +14,7 @@ const links = [
   { to: "/converter", label: "Unit Converter" },
   { to: "/formulas", label: "Formula Sheets" },
   { to: "/concept-maps", label: "Concept Maps" },
+  { to: "/chemistry-facts", label: "Chemistry Facts" },
   { to: "/calculators/molar-mass", label: "Molar Mass" },
   { to: "/calculators/stoichiometry", label: "Stoichiometry" },
   { to: "/calculators/concentration", label: "Concentration" },
