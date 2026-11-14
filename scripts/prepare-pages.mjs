@@ -37,6 +37,11 @@ const routes = [
     indexable: false,
   },
   {
+    path: "/electron-configuration",
+    title: "Electron Configuration Tool | ChemHub",
+    description: "Find full electron configurations and noble-gas shorthand for elements 1 through 36.",
+  },
+  {
     path: "/login",
     title: "Sign In | ChemHub",
     description: "Sign in to your ChemHub account.",
@@ -62,6 +67,16 @@ const routes = [
     path: "/calculators/concentration",
     title: "Concentration Calculator | ChemHub",
     description: "Calculate molarity, mass concentration, and dilution values for chemistry problems.",
+  },
+  {
+    path: "/calculators/mole-converter",
+    title: "Mole Converter | ChemHub",
+    description: "Convert between grams, moles, and particles using a compound's molar mass.",
+  },
+  {
+    path: "/calculators/equation-balancer",
+    title: "Chemical Equation Balancer | ChemHub",
+    description: "Balance chemical equations with whole-number coefficients and check atom counts on both sides.",
   },
   {
     path: "/redox",

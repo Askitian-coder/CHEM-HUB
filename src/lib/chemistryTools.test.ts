@@ -15,6 +15,9 @@ describe("redox reaction balancer", () => {
   it("balances a molecular reaction", () => {
     expect(balanceRedoxEquation("H2 + O2 -> H2O")).toBe("2H2 + O2 → 2H2O");
     expect(balanceRedoxEquation("2H2 + O2 -> 2H2O")).toBe("2H2 + O2 → 2H2O");
+    expect(balanceRedoxEquation("Al + HCl -> AlCl3 + H2")).toBe("2Al + 6HCl → 2AlCl3 + 3H2");
+    expect(balanceRedoxEquation("Ca(OH)2 + H3PO4 -> Ca3(PO4)2 + H2O"))
+      .toBe("3Ca(OH)2 + 2H3PO4 → Ca3(PO4)2 + 6H2O");
   });
 
   it("reports invalid or ambiguous equations", () => {

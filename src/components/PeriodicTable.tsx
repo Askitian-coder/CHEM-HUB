@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
 import type { Category, Element } from "../data/elements";
@@ -85,7 +85,7 @@ function ElementCell({
         <span className="pointer-events-none absolute left-1/2 top-full z-40 mt-1 hidden w-40 -translate-x-1/2 rounded-lg bg-slate-900 px-3 py-2 text-left text-xs font-normal text-white shadow-xl group-hover:block group-focus-visible:block">
           <span className="block font-bold">{element.symbol} · {element.name}</span>
           <span className="mt-1 block">Atomic number: {element.atomicNumber}</span>
-          <span className="block">Atomic mass: {element.atomicMass}</span>
+          <span className="block">Atomic mass: {element.atomicMass.toFixed(3)} u</span>
           <span className="block">{categoryLabel(element.category)}</span>
         </span>
       </button>
@@ -113,23 +113,44 @@ function ElementModal({
   onNavigate: (offset: number) => void;
 }) {
   const style = categoryStyles[element.category];
+  const dialogRef = useRef<HTMLElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const previousOverflow = document.body.style.overflow;
+    closeButtonRef.current?.focus();
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
       if (event.key === "ArrowLeft") onNavigate(-1);
       if (event.key === "ArrowRight") onNavigate(1);
+      if (event.key === "Tab") {
+        const focusable = dialogRef.current?.querySelectorAll<HTMLElement>(
+          'button:not(:disabled), a[href], input:not(:disabled), select:not(:disabled), [tabindex]:not([tabindex="-1"])',
+        );
+        if (!focusable?.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && (document.activeElement === first || !dialogRef.current?.contains(document.activeElement))) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && (document.activeElement === last || !dialogRef.current?.contains(document.activeElement))) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     };
     document.addEventListener("keydown", handleKeyDown);
     document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
+      previousFocus?.focus();
     };
   }, [onClose, onNavigate]);
 
   const rows: [string, string][] = [
-    ["Atomic mass", `${element.atomicMass} u`],
+    ["Atomic mass", `${element.atomicMass.toFixed(3)} u`],
     ["Category", categoryLabel(element.category)],
     ["Block", `${element.block}-block`],
     ["Period", String(element.period)],
@@ -151,16 +172,18 @@ function ElementModal({
       }}
     >
       <section
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="element-modal-title"
         className="relative max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-2xl bg-white shadow-2xl"
       >
         <button
+          ref={closeButtonRef}
           type="button"
           onClick={onClose}
           aria-label="Close element details"
-          className="absolute right-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full bg-white/90 text-2xl leading-none text-slate-600 shadow-sm transition hover:bg-slate-100"
+          className="absolute right-3 top-3 z-10 grid h-11 w-11 place-items-center rounded-full bg-white/90 text-2xl leading-none text-slate-600 shadow-sm transition hover:bg-slate-100"
         >
           ×
         </button>
@@ -179,8 +202,8 @@ function ElementModal({
                 <h2 id="element-modal-title" className="text-2xl font-extrabold text-slate-900">{element.name}</h2>
               </div>
               <div className="flex shrink-0 gap-1">
-                <button type="button" onClick={() => onNavigate(-1)} aria-label="Previous element" className="grid h-9 w-9 place-items-center rounded-lg border border-slate-200 text-lg text-slate-700 hover:bg-slate-50">←</button>
-                <button type="button" onClick={() => onNavigate(1)} aria-label="Next element" className="grid h-9 w-9 place-items-center rounded-lg border border-slate-200 text-lg text-slate-700 hover:bg-slate-50">→</button>
+                <button type="button" onClick={() => onNavigate(-1)} aria-label="Previous element" className="grid h-11 w-11 place-items-center rounded-lg border border-slate-200 text-lg text-slate-700 hover:bg-slate-50">←</button>
+                <button type="button" onClick={() => onNavigate(1)} aria-label="Next element" className="grid h-11 w-11 place-items-center rounded-lg border border-slate-200 text-lg text-slate-700 hover:bg-slate-50">→</button>
               </div>
             </div>
             <dl className="divide-y divide-slate-100 rounded-xl border border-slate-100">
@@ -251,13 +274,14 @@ export default function PeriodicTable() {
       current.includes(state) ? current.filter((value) => value !== state) : [...current, state],
     );
 
-  const navigateElement = (offset: number) => {
+  const closeElementModal = useCallback(() => setSelectedElement(null), []);
+  const navigateElement = useCallback((offset: number) => {
     setSelectedElement((current) => {
       if (!current) return current;
       const currentIndex = ELEMENTS.findIndex((element) => element.atomicNumber === current.atomicNumber);
       return ELEMENTS[(currentIndex + offset + ELEMENTS.length) % ELEMENTS.length];
     });
-  };
+  }, []);
   const clearAll = () => {
     setQuery("");
     setSelectedCategories([]);
@@ -297,6 +321,25 @@ export default function PeriodicTable() {
           )}
         </div>
 
+        <div className="mt-3">
+          <label htmlFor="element-list" className="mb-1.5 block text-sm font-semibold text-slate-700">Choose an element from the list</label>
+          <select
+            id="element-list"
+            defaultValue=""
+            onChange={(event) => {
+              const element = ELEMENTS.find((item) => item.symbol === event.target.value);
+              if (element) setSelectedElement(element);
+              event.target.value = "";
+            }}
+            className="min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+          >
+            <option value="">All 118 elements</option>
+            {ELEMENTS.map((element) => (
+              <option key={element.symbol} value={element.symbol}>{element.name} ({element.symbol})</option>
+            ))}
+          </select>
+        </div>
+
         <div className="mt-4 space-y-3 border-t border-slate-100 pt-4">
           <FilterRow label="Category">
             {categories.map((category) => (
@@ -328,7 +371,7 @@ export default function PeriodicTable() {
             key={category}
             aria-pressed={legendCategory === category}
             onClick={() => setLegendCategory((current) => current === category ? null : category)}
-            className={`flex items-center gap-1.5 rounded-full px-1 py-1 text-[11px] transition hover:bg-white sm:text-xs ${legendCategory && legendCategory !== category ? "text-slate-400" : "text-slate-700"}`}
+            className={`flex min-h-11 items-center gap-1.5 rounded-full px-2 py-2 text-xs transition hover:bg-white ${legendCategory && legendCategory !== category ? "text-slate-400" : "text-slate-700"}`}
           >
             <span className={`h-3 w-3 rounded-sm ${categoryStyles[category].color}`} />
             {categoryLabel(category)}
@@ -385,7 +428,7 @@ export default function PeriodicTable() {
       {selectedElement && (
         <ElementModal
           element={selectedElement}
-          onClose={() => setSelectedElement(null)}
+          onClose={closeElementModal}
           onNavigate={navigateElement}
         />
       )}
@@ -408,7 +451,7 @@ function FilterChip({ label, active, onClick }: { label: string; active: boolean
       type="button"
       aria-pressed={active}
       onClick={onClick}
-      className={`rounded-full border px-2.5 py-1 text-[11px] font-medium transition sm:text-xs ${
+      className={`min-h-11 rounded-full border px-3 py-2 text-xs font-medium transition ${
         active
           ? "border-indigo-600 bg-indigo-600 text-white shadow-sm"
           : "border-slate-200 bg-white text-slate-600 hover:border-indigo-300 hover:text-indigo-700"

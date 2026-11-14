@@ -51,7 +51,15 @@ describe("parseFormula", () => {
     ["", /cannot be empty/i],
     ["2H", /number must follow an element or group/i],
     ["H2..O", /hydrate separator/],
+    ["H0", /positive whole numbers/i],
+    ["(H2)0", /positive whole numbers/i],
+    ["CuSO4·0H2O", /positive whole numbers/i],
+    ["H9007199254740992", /positive whole numbers/i],
   ] as const)("rejects malformed formula %j", (formula, error) => {
     expect(() => parseFormula(formula)).toThrow(error);
+  });
+
+  it("rejects element counts that overflow when groups are multiplied", () => {
+    expect(() => parseFormula("(H9007199254740991)2")).toThrow(/exceed the supported range/i);
   });
 });

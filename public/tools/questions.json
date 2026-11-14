@@ -1,0 +1,40 @@
+{
+  "questions": [
+    {
+      "id": "chemhub-atom-protons-01",
+      "exam": "ChemHub practice",
+      "year": 2026,
+      "subject": "Chemistry",
+      "topic": "Atoms & the Periodic Table",
+      "q": "How many protons does a neutral carbon atom have?",
+      "choices": ["6", "12", "8", "14"],
+      "answer": 0,
+      "why": "Carbon's atomic number is 6, so every carbon atom has 6 protons. A neutral atom also has 6 electrons.",
+      "source": "OpenStax Chemistry 2e, Chapter 2: Atoms, Molecules, and Ions (topic reference)"
+    },
+    {
+      "id": "chemhub-molar-mass-water-01",
+      "exam": "ChemHub practice",
+      "year": 2026,
+      "subject": "Chemistry",
+      "topic": "Moles & Molar Mass",
+      "q": "What is the approximate molar mass of H2O? (H ≈ 1 g/mol, O ≈ 16 g/mol)",
+      "choices": ["17 g/mol", "18 g/mol", "16 g/mol", "20 g/mol"],
+      "answer": 1,
+      "why": "Water has two hydrogen atoms and one oxygen atom: 2 × 1 + 16 ≈ 18 g/mol.",
+      "source": "OpenStax Chemistry 2e, Chapter 3: Composition of Substances and Solutions (topic reference)"
+    },
+    {
+      "id": "chemhub-isotopes-neutrons-01",
+      "exam": "ChemHub practice",
+      "year": 2026,
+      "subject": "Chemistry",
+      "topic": "Atoms & the Periodic Table",
+      "q": "Isotopes of the same element differ in their number of:",
+      "choices": ["protons", "electrons", "neutrons", "charges"],
+      "answer": 2,
+      "why": "Isotopes have the same number of protons but different numbers of neutrons.",
+      "source": "OpenStax Chemistry 2e, Chapter 2: Atoms, Molecules, and Ions (topic reference)"
+    }
+  ]
+}

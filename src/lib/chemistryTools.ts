@@ -55,11 +55,16 @@ function parseSpecies(input: string): ChemicalSpecies {
   return { formula, charge, counts, coefficient };
 }
 
-function gcd(a: number, b: number): number {
-  let left = Math.abs(a);
-  let right = Math.abs(b);
+function gcd(a: bigint, b: bigint): bigint {
+  let left = a < 0n ? -a : a;
+  let right = b < 0n ? -b : b;
   while (right) [left, right] = [right, left % right];
-  return left || 1;
+  return left || 1n;
+}
+
+function reduceRow(row: bigint[]): bigint[] {
+  const divisor = row.reduce(gcd, 0n);
+  return divisor > 1n ? row.map((value) => value / divisor) : row;
 }
 
 export function balanceRedoxEquation(equation: string): string {
@@ -81,32 +86,31 @@ export function balanceRedoxEquation(equation: string): string {
   const matrix = elements.map((symbol) =>
     species.map((item, index) => {
       const direction = index < reactants.length ? 1 : -1;
-      return direction * (item.counts.get(symbol) ?? 0);
+      return BigInt(direction * (item.counts.get(symbol) ?? 0));
     }),
   );
-  matrix.push(species.map((item, index) => (index < reactants.length ? item.charge : -item.charge)));
+  matrix.push(species.map((item, index) =>
+    BigInt(index < reactants.length ? item.charge : -item.charge),
+  ));
 
   const rows = matrix.map((row) => row.slice());
   const pivotColumns: number[] = [];
   let pivotRow = 0;
   for (let column = 0; column < species.length && pivotRow < rows.length; column += 1) {
-    let bestRow = pivotRow;
-    for (let row = pivotRow + 1; row < rows.length; row += 1) {
-      if (Math.abs(rows[row][column]) > Math.abs(rows[bestRow][column])) bestRow = row;
-    }
-    if (Math.abs(rows[bestRow][column]) < 1e-10) continue;
+    let selectedRow = pivotRow;
+    while (selectedRow < rows.length && rows[selectedRow][column] === 0n) selectedRow += 1;
+    if (selectedRow === rows.length) continue;
 
-    [rows[pivotRow], rows[bestRow]] = [rows[bestRow], rows[pivotRow]];
-    const pivot = rows[pivotRow][column];
-    for (let entry = column; entry < species.length; entry += 1) rows[pivotRow][entry] /= pivot;
-
+    [rows[pivotRow], rows[selectedRow]] = [rows[selectedRow], rows[pivotRow]];
     for (let row = 0; row < rows.length; row += 1) {
-      if (row === pivotRow) continue;
+      if (row === pivotRow || rows[row][column] === 0n) continue;
+      const pivot = rows[pivotRow][column];
       const factor = rows[row][column];
-      for (let entry = column; entry < species.length; entry += 1) {
-        rows[row][entry] -= factor * rows[pivotRow][entry];
-      }
+      rows[row] = reduceRow(rows[row].map(
+        (value, entry) => value * pivot - rows[pivotRow][entry] * factor,
+      ));
     }
+    rows[pivotRow] = reduceRow(rows[pivotRow]);
     pivotColumns.push(column);
     pivotRow += 1;
   }
@@ -117,32 +121,34 @@ export function balanceRedoxEquation(equation: string): string {
   }
 
   const freeColumn = freeColumns[0];
-  const coefficients = Array(species.length).fill(0);
-  coefficients[freeColumn] = 1;
+  const denominator = pivotColumns.reduce(
+    (product, column, row) => product * (rows[row][column] < 0n ? -rows[row][column] : rows[row][column]),
+    1n,
+  );
+  const coefficients = Array<bigint>(species.length).fill(0n);
+  coefficients[freeColumn] = denominator;
   pivotColumns.forEach((column, row) => {
-    coefficients[column] = -rows[row][freeColumn];
+    coefficients[column] = (-rows[row][freeColumn] * denominator) / rows[row][column];
   });
 
-  if (coefficients.some((coefficient) => Math.abs(coefficient) < 1e-10)) {
+  if (coefficients.some((coefficient) => coefficient === 0n)) {
     throw new Error("The entered species cannot all appear in a balanced reaction.");
   }
-  if (coefficients.every((coefficient) => coefficient < 0)) {
+  if (coefficients.every((coefficient) => coefficient < 0n)) {
     coefficients.forEach((coefficient, index) => {
       coefficients[index] = -coefficient;
     });
   }
-  if (coefficients.some((coefficient) => coefficient <= 0)) {
+  if (coefficients.some((coefficient) => coefficient <= 0n)) {
     throw new Error("The entered reactants and products do not give positive balance coefficients.");
   }
 
-  const scale = 1_000_000;
-  let integers = coefficients.map((coefficient) => Math.round(coefficient * scale));
-  const divisor = integers.reduce(gcd);
-  integers = integers.map((coefficient) => coefficient / divisor);
+  const divisor = coefficients.reduce(gcd, 0n);
+  const integers = coefficients.map((coefficient) => coefficient / divisor);
   const formatSide = (side: ChemicalSpecies[], offset: number) =>
     side.map((item, index) => {
       const coefficient = integers[offset + index];
-      return `${coefficient === 1 ? "" : coefficient}${item.formula}`;
+      return `${coefficient === 1n ? "" : coefficient}${item.formula}`;
     }).join(" + ");
 
   return `${formatSide(reactants, 0)} → ${formatSide(products, reactants.length)}`;

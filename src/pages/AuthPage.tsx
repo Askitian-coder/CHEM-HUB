@@ -16,6 +16,7 @@ export default function AuthPage({ mode }: AuthPageProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [consentConfirmed, setConsentConfirmed] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -38,6 +39,10 @@ export default function AuthPage({ mode }: AuthPageProps) {
       setError("Authentication is not configured yet.");
       return;
     }
+    if (isSignup && !consentConfirmed) {
+      setError("Confirm that you have read the notices and have permission to create this account.");
+      return;
+    }
     if (isSignup && password !== confirmPassword) {
       setError("The passwords do not match.");
       return;
@@ -50,7 +55,14 @@ export default function AuthPage({ mode }: AuthPageProps) {
         const { data, error: signupError } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: redirectTo },
+          options: {
+            emailRedirectTo: redirectTo,
+            data: {
+              privacy_notice_version: "2026-11-14",
+              student_or_guardian_consent_confirmed: consentConfirmed,
+              student_or_guardian_consent_at: new Date().toISOString(),
+            },
+          },
         });
         if (signupError) {
           setError(getAuthErrorMessage(signupError));
@@ -195,6 +207,24 @@ export default function AuthPage({ mode }: AuthPageProps) {
                 {showConfirmPassword ? "Hide" : "Show"}
               </button>
             </div>
+          </div>
+        )}
+        {isSignup && (
+          <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <label htmlFor="signup-consent" className="flex items-start gap-3 text-sm leading-6 text-slate-700">
+              <input
+                id="signup-consent"
+                type="checkbox"
+                required
+                checked={consentConfirmed}
+                onChange={(event) => setConsentConfirmed(event.target.checked)}
+                className="mt-1 h-5 w-5 shrink-0 accent-indigo-600"
+              />
+              <span>
+                I have read the <a className="font-semibold text-indigo-700 underline" href={`${import.meta.env.BASE_URL}privacy.html`}>Privacy Notice</a> and <a className="font-semibold text-indigo-700 underline" href={`${import.meta.env.BASE_URL}terms.html`}>Terms</a>. I am 18 or older, or my parent/guardian has reviewed these notices and agrees to my account.
+              </span>
+            </label>
+            <p className="ml-8 mt-2 text-xs leading-5 text-slate-600">This confirmation is self-attested; ChemHub does not independently verify age or guardian identity.</p>
           </div>
         )}
         {error && <p role="alert" className="rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-800">{error}</p>}

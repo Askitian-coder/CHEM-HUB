@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://askitian-coder.github.io/CHEM-HUB/sitemap.xml

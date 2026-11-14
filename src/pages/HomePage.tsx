@@ -3,14 +3,18 @@ import { getDailyChemistryFact } from "../data/chemistryFacts";
 
 const tools = [
   { title: "Periodic Table", description: "Explore all 118 elements and their properties.", path: "/periodic-table", icon: "⚛️", color: "bg-sky-50 text-sky-700 ring-sky-100", iconColor: "bg-sky-100" },
+  { title: "Electron Configuration", description: "Find electron configurations and noble-gas shorthand for elements 1–36.", path: "/electron-configuration", icon: "e⁻", color: "bg-sky-50 text-sky-700 ring-sky-100", iconColor: "bg-sky-100" },
   { title: "Unit Converter", description: "Switch between the units used in chemistry.", path: "/converter", icon: "⇄", color: "bg-violet-50 text-violet-700 ring-violet-100", iconColor: "bg-violet-100" },
   { title: "Formula Sheets", description: "Find the equations you need for each topic.", path: "/formulas", icon: "∑", color: "bg-emerald-50 text-emerald-700 ring-emerald-100", iconColor: "bg-emerald-100" },
   { title: "Concept Maps", description: "Review visual guides to electrochemistry, acids, bases, and salts.", path: "/concept-maps", icon: "⌘", color: "bg-blue-50 text-blue-700 ring-blue-100", iconColor: "bg-blue-100" },
   { title: "Chemistry Facts", description: "Discover surprising facts and clear up common chemistry myths.", path: "/chemistry-facts", icon: "✦", color: "bg-lime-50 text-lime-800 ring-lime-100", iconColor: "bg-lime-100" },
   { title: "Study Progress", description: "Track chemistry topics, study days, and your learning streak.", path: "/study-progress", icon: "✓", color: "bg-indigo-50 text-indigo-700 ring-indigo-100", iconColor: "bg-indigo-100" },
+  { title: "Practice Quizzes", description: "Practise original chemistry questions with explanations and textbook-topic references.", path: `${import.meta.env.BASE_URL}tools/practice-quiz-v2.html`, external: true, icon: "?", color: "bg-violet-50 text-violet-700 ring-violet-100", iconColor: "bg-violet-100" },
   { title: "Molar Mass", description: "Calculate formula mass with clear working.", path: "/calculators/molar-mass", icon: "⚖️", color: "bg-amber-50 text-amber-800 ring-amber-100", iconColor: "bg-amber-100" },
+  { title: "Mole Converter", description: "Convert between grams, moles, and particles with clear working.", path: "/calculators/mole-converter", icon: "mol", color: "bg-amber-50 text-amber-800 ring-amber-100", iconColor: "bg-amber-100" },
   { title: "Stoichiometry", description: "Work through mole ratios and reaction yields.", path: "/calculators/stoichiometry", icon: "🧪", color: "bg-rose-50 text-rose-700 ring-rose-100", iconColor: "bg-rose-100" },
   { title: "Concentration", description: "Solve molarity, mass concentration, and dilution.", path: "/calculators/concentration", icon: "◉", color: "bg-indigo-50 text-indigo-700 ring-indigo-100", iconColor: "bg-indigo-100" },
+  { title: "Equation Balancer", description: "Balance chemical equations and check each element's atom count.", path: "/calculators/equation-balancer", icon: "⇌", color: "bg-cyan-50 text-cyan-800 ring-cyan-100", iconColor: "bg-cyan-100" },
   { title: "Redox Balancer", description: "Balance atoms and charge in redox equations.", path: "/redox", icon: "⇌", color: "bg-cyan-50 text-cyan-800 ring-cyan-100", iconColor: "bg-cyan-100" },
   { title: "Acids, Bases & Salts", description: "Identify common compound types from their formulas.", path: "/acid-base-salts", icon: "pH", color: "bg-fuchsia-50 text-fuchsia-800 ring-fuchsia-100", iconColor: "bg-fuchsia-100" },
   { title: "Oxidation Numbers", description: "Work out oxidation numbers with familiar chemistry rules.", path: "/oxidation-numbers", icon: "±", color: "bg-teal-50 text-teal-800 ring-teal-100", iconColor: "bg-teal-100" },
@@ -53,17 +57,21 @@ export default function HomePage() {
         <p className="mt-1 text-slate-600">Pick a tool and make your next study session easier.</p>
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {tools.map((tool) => (
-          <Link
-            key={tool.path}
-            to={tool.path}
-            className={`group rounded-2xl p-5 shadow-sm ring-1 transition duration-200 hover:-translate-y-1 hover:shadow-md ${tool.color}`}
-          >
-            <span className={`grid h-12 w-12 place-items-center rounded-xl text-2xl ${tool.iconColor}`} aria-hidden="true">{tool.icon}</span>
-            <h3 className="mt-4 text-lg font-bold">{tool.title}<span className="ml-2 inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">→</span></h3>
-            <p className="mt-2 text-sm leading-6 opacity-80">{tool.description}</p>
-          </Link>
-        ))}
+        {tools.map((tool) => {
+          const contents = (
+            <>
+              <span className={`grid h-12 w-12 place-items-center rounded-xl text-2xl ${tool.iconColor}`} aria-hidden="true">{tool.icon}</span>
+              <h3 className="mt-4 text-lg font-bold">{tool.title}<span className="ml-2 inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">→</span></h3>
+              <p className="mt-2 text-sm leading-6 opacity-80">{tool.description}</p>
+            </>
+          );
+          const className = `group rounded-2xl p-5 shadow-sm ring-1 transition duration-200 hover:-translate-y-1 hover:shadow-md ${tool.color}`;
+          return tool.external ? (
+            <a key={tool.path} href={tool.path} className={className}>{contents}</a>
+          ) : (
+            <Link key={tool.path} to={tool.path} className={className}>{contents}</Link>
+          );
+        })}
       </div>
     </div>
   );

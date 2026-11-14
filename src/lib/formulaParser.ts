@@ -26,12 +26,20 @@ const normalizeFormula = (formula: string) =>
 function readNumber(source: string, start: number) {
   let end = start;
   while (end < source.length && /\d/.test(source[end])) end += 1;
-  return end === start ? { value: 1, end } : { value: Number(source.slice(start, end)), end };
+  const value = end === start ? 1 : Number(source.slice(start, end));
+  if (!Number.isSafeInteger(value) || value <= 0) {
+    throw new Error("Atom counts and formula multipliers must be positive whole numbers within the supported range.");
+  }
+  return { value, end };
 }
 
 function addCounts(target: Map<string, number>, source: Map<string, number>, multiplier: number) {
   for (const [symbol, count] of source) {
-    target.set(symbol, (target.get(symbol) ?? 0) + count * multiplier);
+    const total = (target.get(symbol) ?? 0) + count * multiplier;
+    if (!Number.isSafeInteger(total) || total <= 0) {
+      throw new Error("Atom counts and formula multipliers exceed the supported range.");
+    }
+    target.set(symbol, total);
   }
 }
 
@@ -95,7 +103,11 @@ function parseSegment(segment: string): Map<string, number> {
       index += symbolLength;
       const { value: multiplier, end } = readNumber(segment, index);
       index = end;
-      result.set(element.symbol, (result.get(element.symbol) ?? 0) + multiplier);
+      const total = (result.get(element.symbol) ?? 0) + multiplier;
+      if (!Number.isSafeInteger(total)) {
+        throw new Error("Atom counts and formula multipliers exceed the supported range.");
+      }
+      result.set(element.symbol, total);
       hasTerm = true;
     }
 
@@ -141,5 +153,8 @@ export function computeMolarMass(formula: string): number {
     if (!element) throw new Error(`Unknown element: ${symbol}`);
     return total + element.atomicMass * count;
   }, 0);
+  if (!Number.isFinite(mass) || mass <= 0) {
+    throw new Error("This formula is too large to calculate a molar mass.");
+  }
   return Number(mass.toFixed(2));
 }

@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practise chemistry with original questions, useful explanations, and references to chemistry learning material.">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://askitian-coder.github.io/CHEM-HUB/tools/practice-quiz-v2.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ChemHub">
+  <meta property="og:title" content="Practice Quizzes | ChemHub by Askitian">
+  <meta property="og:description" content="Practise chemistry with original questions, explanations, and topic references.">
+  <meta property="og:url" content="https://askitian-coder.github.io/CHEM-HUB/tools/practice-quiz-v2.html">
+  <title>Practice Quizzes | ChemHub by Askitian</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      color: #0f172a;
+      background: #f8fafc;
+      line-height: 1.5;
+      font-synthesis: none;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; }
+    a { color: #4338ca; }
+    a:focus-visible, button:focus-visible, select:focus-visible {
+      outline: 3px solid #4f46e5;
+      outline-offset: 3px;
+    }
+    .site-header {
+      border-bottom: 1px solid #e2e8f0;
+      background: #fff;
+    }
+    .header-inner, main, footer {
+      width: min(100% - 32px, 760px);
+      margin-inline: auto;
+    }
+    .header-inner {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { font-size: 1.2rem; font-weight: 800; text-decoration: none; }
+    .header-home { font-weight: 600; }
+    main { padding-block: 32px 48px; }
+    h1 { margin: 0; font-size: clamp(1.8rem, 5vw, 2.3rem); line-height: 1.2; }
+    h2 { margin: 0; font-size: 1.2rem; }
+    .subtitle { margin: 10px 0 24px; color: #475569; }
+    .back-link { display: inline-block; margin-bottom: 18px; font-weight: 600; }
+    .card {
+      margin-top: 20px;
+      padding: clamp(16px, 4vw, 24px);
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: 0 1px 3px rgb(15 23 42 / 0.06);
+    }
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+      gap: 14px;
+    }
+    label { display: block; margin-bottom: 5px; font-size: .9rem; font-weight: 650; }
+    select, button {
+      min-height: 46px;
+      border-radius: 10px;
+      font: inherit;
+    }
+    select {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #94a3b8;
+      background: #fff;
+      color: #0f172a;
+    }
+    button {
+      padding: 10px 16px;
+      border: 1px solid transparent;
+      background: #4f46e5;
+      color: #fff;
+      font-weight: 650;
+      cursor: pointer;
+    }
+    button:hover:not(:disabled) { background: #3730a3; }
+    button:disabled { cursor: not-allowed; opacity: .58; }
+    .choice {
+      display: block;
+      width: 100%;
+      margin-top: 9px;
+      border-color: #cbd5e1;
+      background: #fff;
+      color: #0f172a;
+      text-align: left;
+      font-weight: 500;
+    }
+    .choice:hover:not(:disabled) { border-color: #4f46e5; background: #eef2ff; }
+    .choice.right { border-color: #047857; background: #ecfdf5; color: #065f46; }
+    .choice.wrong { border-color: #b91c1c; background: #fef2f2; color: #991b1b; }
+    .muted { color: #475569; font-size: .92rem; }
+    .question { margin: 16px 0; font-size: 1.12rem; font-weight: 700; }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .filters-status { min-height: 1.5em; margin: 14px 0 0; }
+    .bar {
+      height: 9px;
+      margin-bottom: 14px;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #e2e8f0;
+    }
+    .bar > div { height: 100%; background: #4f46e5; transition: width .2s ease; }
+    .feedback { margin-top: 16px; }
+    .feedback p { margin: 4px 0; }
+    .source { margin-top: 12px; color: #475569; font-size: .9rem; }
+    .correct { color: #065f46; font-weight: 700; }
+    .error { color: #991b1b; font-weight: 700; }
+    footer {
+      padding-block: 18px 24px;
+      border-top: 1px solid #e2e8f0;
+      color: #475569;
+      font-size: .9rem;
+      text-align: center;
+    }
+    footer nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+    }
+    footer nav a {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../index.html">ChemHub</a>
+      <a class="header-home" href="../index.html">Back to home</a>
+    </div>
+  </header>
+  <main>
+    <a class="back-link" href="../index.html">← Back to ChemHub</a>
+    <h1>Practice Quizzes</h1>
+    <p class="subtitle">Build confidence with original chemistry questions, short sessions, and explanations. These are study questions, not official WAEC examination questions.</p>
+    <noscript><p class="card error" role="alert">Turn on JavaScript to use the practice quiz. The rest of ChemHub remains available.</p></noscript>
+    <div id="app" aria-live="polite"><p class="muted">Loading questions…</p></div>
+  </main>
+  <footer>
+    <p>ChemHub is a study aid, not an official WAEC resource or affiliated with any school. Check answers with your teacher.</p>
+    <nav aria-label="Site information">
+      <a href="../privacy.html">Privacy</a> ·
+      <a href="../terms.html">Terms</a> ·
+      <a href="../contact.html">Contact</a>
+    </nav>
+    <p>ChemHub — built for chemistry students</p>
+  </footer>
+
+  <script>
+    "use strict";
+    const app = document.getElementById("app");
+    let bank = [];
+    let state = null;
+
+    function element(tag, className, text) {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text !== undefined) node.textContent = text;
+      return node;
+    }
+
+    function validateBank(data) {
+      if (!data || !Array.isArray(data.questions) || data.questions.length === 0) {
+        throw new Error("The question bank is empty or has an invalid format.");
+      }
+      const ids = new Set();
+      const prompts = new Set();
+      for (const [index, question] of data.questions.entries()) {
+        if (!question || typeof question !== "object" ||
+            typeof question.id !== "string" || !question.id.trim() ||
+            typeof question.exam !== "string" || typeof question.year !== "number" ||
+            typeof question.subject !== "string" || typeof question.topic !== "string" ||
+            typeof question.q !== "string" || !question.q.trim() ||
+            !Array.isArray(question.choices) || question.choices.length < 2 ||
+            !question.choices.every((choice) => typeof choice === "string") ||
+            !Number.isInteger(question.answer) || question.answer < 0 ||
+            question.answer >= question.choices.length ||
+            typeof question.why !== "string" || typeof question.source !== "string" ||
+            !question.source.trim()) {
+          throw new Error(`Question ${index + 1} is incomplete or invalid.`);
+        }
+        const promptKey = `${question.topic.trim().toLowerCase()}:${question.q.trim().toLowerCase()}`;
+        if (ids.has(question.id) || prompts.has(promptKey)) {
+          throw new Error(`Question ${index + 1} duplicates an existing question.`);
+        }
+        ids.add(question.id);
+        prompts.add(promptKey);
+      }
+      return data.questions;
+    }
+
+    function showLoadError(message) {
+      const card = element("section", "card error");
+      card.setAttribute("role", "alert");
+      card.textContent = `Could not load the quiz: ${message} Check your connection and try reloading this page.`;
+      app.replaceChildren(card);
+    }
+
+    async function loadBank() {
+      try {
+        const response = await fetch("questions.json");
+        if (!response.ok) throw new Error(`The question file returned status ${response.status}.`);
+        bank = validateBank(await response.json());
+        renderHome();
+      } catch (error) {
+        showLoadError(error instanceof Error ? error.message : "The question file could not be read.");
+      }
+    }
+
+    function uniqueValues(key) {
+      return [...new Set(bank.map((question) => question[key]))]
+        .sort((left, right) => String(left).localeCompare(String(right)));
+    }
+
+    function shuffled(items) {
+      const copy = items.slice();
+      for (let index = copy.length - 1; index > 0; index -= 1) {
+        const swapIndex = Math.floor(Math.random() * (index + 1));
+        [copy[index], copy[swapIndex]] = [copy[swapIndex], copy[index]];
+      }
+      return copy;
+    }
+
+    function renderHome() {
+      const card = element("section", "card");
+      const filters = element("div", "filters");
+      const filterSelects = {};
+      const addFilter = (key, labelText) => {
+        const wrapper = element("div");
+        const id = `filter-${key}`;
+        const label = element("label", "", labelText);
+        label.htmlFor = id;
+        const select = element("select");
+        select.id = id;
+        const all = element("option", "", "All");
+        all.value = "";
+        select.append(all);
+        uniqueValues(key).forEach((value) => {
+          const option = element("option", "", String(value));
+          option.value = String(value);
+          select.append(option);
+        });
+        wrapper.append(label, select);
+        filters.append(wrapper);
+        filterSelects[key] = select;
+      };
+      addFilter("exam", "Exam");
+      addFilter("subject", "Subject");
+      addFilter("topic", "Topic");
+      addFilter("year", "Year");
+
+      const status = element("p", "muted filters-status");
+      status.setAttribute("aria-live", "polite");
+      const lengthLabel = element("label", "", "Session length");
+      lengthLabel.htmlFor = "session-length";
+      const length = element("select");
+      length.id = "session-length";
+      [["5", "5 questions"], ["10", "10 questions"], ["20", "20 questions"], ["all", "All matching"]]
+        .forEach(([value, text]) => {
+          const option = element("option", "", text);
+          option.value = value;
+          if (value === "10") option.selected = true;
+          length.append(option);
+        });
+      const start = element("button", "", "Start session");
+      start.type = "button";
+      const row = element("div", "row");
+      const lengthWrap = element("div");
+      lengthWrap.append(lengthLabel, length);
+      row.append(lengthWrap, start);
+      card.append(filters, status, row);
+      app.replaceChildren(card);
+
+      const matching = () => bank.filter((question) =>
+        Object.entries(filterSelects).every(([key, select]) =>
+          !select.value || String(question[key]) === select.value));
+      const refresh = () => {
+        const count = matching().length;
+        status.textContent = count
+          ? `${count} ${count === 1 ? "question matches" : "questions match"} these filters.`
+          : "No questions match these filters. Try changing or clearing a filter.";
+        start.disabled = count === 0;
+      };
+      Object.values(filterSelects).forEach((select) => select.addEventListener("change", refresh));
+      start.addEventListener("click", () => {
+        const pool = shuffled(matching());
+        const requested = length.value === "all" ? pool.length : Number(length.value);
+        const session = pool.slice(0, Math.min(requested, pool.length));
+        if (session.length) startSession(session);
+      });
+      refresh();
+    }
+
+    function startSession(list) {
+      state = { list, index: 0, score: 0, answered: false };
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const { list, index } = state;
+      const item = list[index];
+      const card = element("section", "card");
+      const progress = element("div", "bar");
+      progress.setAttribute("role", "progressbar");
+      progress.setAttribute("aria-label", "Quiz progress");
+      progress.setAttribute("aria-valuemin", "0");
+      progress.setAttribute("aria-valuemax", String(list.length));
+      progress.setAttribute("aria-valuenow", String(index));
+      const progressFill = element("div");
+      progressFill.style.width = `${(index / list.length) * 100}%`;
+      progress.append(progressFill);
+      card.append(progress);
+      card.append(element("p", "muted", `${item.exam} ${item.year} · ${item.subject} · ${item.topic} · Question ${index + 1} of ${list.length}`));
+      card.append(element("h2", "question", item.q));
+
+      const feedback = element("div", "feedback");
+      const next = element("button", "", index + 1 < list.length ? "Next question" : "See results");
+      next.type = "button";
+      next.disabled = true;
+      item.choices.forEach((choice, choiceIndex) => {
+        const button = element("button", "choice", choice);
+        button.type = "button";
+        button.addEventListener("click", () => {
+          if (state.answered) return;
+          state.answered = true;
+          state.score += Number(choiceIndex === item.answer);
+          card.querySelectorAll(".choice").forEach((option, indexInChoices) => {
+            option.disabled = true;
+            if (indexInChoices === item.answer) option.classList.add("right");
+            else if (indexInChoices === choiceIndex) option.classList.add("wrong");
+          });
+          feedback.append(element("p", choiceIndex === item.answer ? "correct" : "error",
+            choiceIndex === item.answer ? "Correct." : "Not quite."));
+          if (item.why) feedback.append(element("p", "muted", item.why));
+          feedback.append(element("p", "source", `Topic reference: ${item.source}. Question written for ChemHub; it is not copied from the cited source.`));
+          next.disabled = false;
+        });
+        card.append(button);
+      });
+
+      card.append(feedback);
+      const row = element("div", "row");
+      next.addEventListener("click", () => {
+        if (!state.answered) return;
+        state.index += 1;
+        state.answered = false;
+        state.index < list.length ? renderQuestion() : renderResults();
+      });
+      row.append(next);
+      card.append(row);
+      app.replaceChildren(card);
+    }
+
+    function renderResults() {
+      const { list, score } = state;
+      const percentage = Math.round((score / list.length) * 100);
+      const card = element("section", "card");
+      card.append(element("h2", "", `${score} of ${list.length} correct (${percentage}%)`));
+      card.append(element("p", "muted", percentage >= 80
+        ? "Strong result. Choose a new set of filters to keep practising."
+        : "Review the explanations, then try another session."));
+      const newSession = element("button", "", "New session");
+      newSession.type = "button";
+      newSession.addEventListener("click", renderHome);
+      const row = element("div", "row");
+      row.append(newSession);
+      card.append(row);
+      app.replaceChildren(card);
+    }
+
+    loadBank();
+  </script>
+</body>
+</html>
